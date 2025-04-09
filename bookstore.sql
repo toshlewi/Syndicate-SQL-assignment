@@ -19,3 +19,11 @@ CREATE TABLE book_author (
     authorName Varchar(50)
     );
 
+-- create table for book author:
+
+CREATE TABLE book_author(
+    author_id INT,
+    book_id INT,
+    author_name VARCHAR(50),
+    PRIMARY KEY(author_id, book_id)
+    );
