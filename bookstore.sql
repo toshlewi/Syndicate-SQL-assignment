@@ -133,3 +133,21 @@ cost DECIMAL (10, 2 ) NOT NULL
     FOREIGN KEY (order_id) REFERENCES cust_order(order_id),
     FOREIGN KEY (book_id) REFERENCES book(book_id)
     );
+
+     CREATE TABLE publisher(
+ publisher_id INT AUTO_INCREMENT PRIMARY KEY,
+ first_name VARCHAR(25) NOT NULL,
+ last_name VARCHAR (25) NOT NULL,
+ email VARCHAR(50),
+ phone VARCHAR(30)
+ );
+ CREATE TABLE book_language(
+ language_id  INT AUTO_INCREMENT PRIMARY KEY,
+ language_name VARCHAR (50) NOT NULL
+ );
+ 
+ ALTER TABLE book
+ ADD FOREIGN KEY (publisher_id) REFERENCES publisher(publisher_id);
+ 
+  ALTER TABLE book
+ ADD FOREIGN KEY ( language_id) REFERENCES book_language(language_id);
