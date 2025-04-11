@@ -151,3 +151,63 @@ cost DECIMAL (10, 2 ) NOT NULL
  
   ALTER TABLE book
  ADD FOREIGN KEY ( language_id) REFERENCES book_language(language_id);
+
+
+
+-- USER ACCOUNTS AND ROLES
+CREATE USER 'admin'@'localhost'
+IDENTIFIED BY 'admin_1234';
+
+GRANT ALL PRIVILEGES ON bookstore.*
+TO 'admin'@'localhost';
+
+-- sales privileges
+CREATE USER 'sales'@'localhost'
+IDENTIFIED BY 'sales_1234';
+
+GRANT SELECT ON bookstore.*
+TO 'sales'@'localhost';
+
+GRANT INSERT, UPDATE ON bookstore.customer_address
+TO 'sales'@'localhost';
+
+GRANT INSERT, UPDATE ON bookstore.customer
+TO 'sales'@'localhost';
+
+GRANT INSERT, UPDATE ON bookstore.cust_order
+TO 'sales'@'localhost';
+
+GRANT INSERT, UPDATE ON bookstore.order_line
+TO 'sales'@'localhost';
+
+GRANT INSERT, UPDATE ON bookstore.order_history
+TO 'sales'@'localhost';
+
+GRANT INSERT, UPDATE ON bookstore.shipping_method
+TO 'sales'@'localhost';
+
+-- inventory privileges
+CREATE USER 'inventory'@'localhost' 
+IDENTIFIED BY 'inventory_1234';
+
+GRANT SELECT ON bookstore.*
+TO 'inventory'@'localhost';
+
+GRANT INSERT, UPDATE, DELETE ON bookstore.book
+TO 'inventory'@'localhost';
+
+GRANT INSERT, UPDATE, DELETE ON bookstore.book_author
+TO 'inventory'@'localhost';
+
+GRANT INSERT, UPDATE, DELETE ON bookstore.author
+TO 'inventory'@'localhost';
+
+GRANT INSERT, UPDATE, DELETE ON bookstore.publisher
+TO 'inventory'@'localhost';
+
+-- read only user
+CREATE USER 'user_view'@'localhost'
+IDENTIFIED BY 'user_1234';
+
+GRANT SELECT ON bookstore.*
+TO 'user_view'@'localhost';
