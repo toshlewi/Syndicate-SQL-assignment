@@ -1,130 +1,133 @@
+Here's your complete README with the visual database diagram integrated:
+
 # Bookstore Database System
 
 ## Overview
 This SQL database system provides a complete solution for managing bookstore operations, including inventory, customers, orders, and shipping. The database is designed to support both physical and online bookstore needs with comprehensive tables and relationships.
 
 ## Database Structure
-```erDiagram
+
+### Visual Schema Diagram
+```mermaid
+erDiagram
+    book_language ||--o{ book : "1:N"
     book_language {
-        int language_id
-        varchar(50) language_name
-        PRIMARY KEY
+        INT language_id PK
+        VARCHAR(50) language_name
     }
+    
+    publisher ||--o{ book : "1:N"
     publisher {
-        int publisher_id
-        varchar(25) first_name
-        varchar(25) last_name
-        varchar(50) email
-        varchar(30) phone
-        PRIMARY KEY
+        INT publisher_id PK
+        VARCHAR(25) first_name
+        VARCHAR(25) last_name
+        VARCHAR(50) email
+        VARCHAR(30) phone
     }
+    
+    book ||--o{ book_author : "1:N"
     book {
-        int book_id
-        varchar(255) title
-        date publication_date
-        decimal(10,2) price
-        int publisher_id
-        int language_id
-        PRIMARY KEY
+        INT book_id PK
+        VARCHAR(255) title
+        DATE publication_date
+        DECIMAL(10,2) price
+        INT publisher_id FK
+        INT language_id FK
     }
+    
+    author ||--o{ book_author : "1:N"
     author {
-        int author_id
-        varchar(100) author_name
-        PRIMARY KEY
+        INT author_id PK
+        VARCHAR(100) author_name
     }
+    
+    book_author }|--|| book : "M:1"
+    book_author }|--|| author : "M:1"
     book_author {
-        int book_id
-        int author_id
-        PRIMARY KEY
+        INT book_id PK,FK
+        INT author_id PK,FK
     }
+    
+    customer ||--o{ cust_order : "1:N"
     customer {
-        int customer_id
-        varchar(50) first_name
-        varchar(50) last_name
-        varchar(20) phone_number
-        varchar(50) email
-        datetime registration_date
-        PRIMARY KEY
+        INT customer_id PK
+        VARCHAR(50) first_name
+        VARCHAR(50) last_name
+        VARCHAR(20) phone_number
+        VARCHAR(50) email
+        DATETIME registration_date
     }
-    address {
-        int address_id
-        varchar(100) street
-        varchar(50) city
-        int country_id
-        PRIMARY KEY
-    }
-    country {
-        int country_id
-        varchar(50) country_name
-        PRIMARY KEY
-    }
-    address_status {
-        int status_id
-        varchar(25) status_name
-        PRIMARY KEY
-    }
+    
+    customer ||--o{ customer_address : "1:N"
+    address ||--o{ customer_address : "1:N"
+    address_status ||--o{ customer_address : "1:1"
+    
+    customer_address }|--|| customer : "M:1"
+    customer_address }|--|| address : "M:1"
+    customer_address }|--|| address_status : "M:1"
     customer_address {
-        int customer_id
-        int address_id
-        int status_id
-        PRIMARY KEY
+        INT customer_id PK,FK
+        INT address_id PK,FK
+        INT status_id FK
     }
-    order_status {
-        int status_id
-        varchar(50) status_name
-        PRIMARY KEY
+    
+    address ||--o{ country : "N:1"
+    address {
+        INT address_id PK
+        VARCHAR(100) street
+        VARCHAR(50) city
+        INT country_id FK
     }
+    
+    country {
+        INT country_id PK
+        VARCHAR(50) country_name
+    }
+    
+    address_status {
+        INT status_id PK
+        VARCHAR(25) status_name
+    }
+    
+    cust_order ||--o{ order_line : "1:N"
+    cust_order ||--o{ order_history : "1:N"
     cust_order {
-        int order_id
-        int customer_id
-        datetime order_date
-        int shipping_address_id
-        decimal(10,2) order_total
-        int status_id
-        PRIMARY KEY
+        INT order_id PK
+        INT customer_id FK
+        DATETIME order_date
+        INT shipping_address_id
+        DECIMAL(10,2) order_total
+        INT status_id FK
     }
-    shipping_method {
-        int method_id
-        varchar(50) method_name
-        decimal(10,2) cost
-        PRIMARY KEY
+    
+    order_status ||--o{ cust_order : "1:N"
+    order_status ||--o{ order_history : "1:N"
+    order_status {
+        INT status_id PK
+        VARCHAR(50) status_name
     }
+    
     order_history {
-        int order_history_id
-        int order_id
-        int status_id
-        datetime status_date
-        PRIMARY KEY
+        INT order_history_id PK
+        INT order_id FK
+        INT status_id FK
+        DATETIME status_date
     }
+    
+    order_line }|--|| cust_order : "M:1"
+    order_line }|--|| book : "M:1"
     order_line {
-        int order_id
-        int book_id
-        int quantity
-        decimal(10,2) price
-        PRIMARY KEY
+        INT order_id PK,FK
+        INT book_id PK,FK
+        INT quantity
+        DECIMAL(10,2) price
     }
-
-    book_language ||--o{ book : "FK"
-    publisher ||--o{ book : "FK"
-    book ||--o{ book_author : "FK"
-    author ||--o{ book_author : "FK"
-    book_author ||--o{ book : "FK"
-    book_author ||--o{ author : "FK"
-    customer ||--o{ customer_address : "FK"
-    address ||--o{ customer_address : "FK"
-    address_status ||--o{ customer_address : "FK"
-    country ||--o{ address : "FK"
-    customer_address ||--o{ customer : "FK"
-    customer_address ||--o{ address : "FK"
-    customer_address ||--o{ address_status : "FK"
-    customer ||--o{ cust_order : "FK"
-    order_status ||--o{ cust_order : "FK"
-    address ||--o{ cust_order : "FK"
-    order_status ||--o{ order_history : "FK"
-    cust_order ||--o{ order_history : "FK"
-    cust_order ||--o{ order_line : "FK"
-    book ||--o{ order_line : "FK"
-
+    
+    shipping_method {
+        INT method_id PK
+        VARCHAR(50) method_name
+        DECIMAL(10,2) cost
+    }
 ```
 
 ### Core Tables
@@ -243,6 +246,5 @@ For assistance with this database system:
 - Email: adelewigitz@gmail.com
 - Phone: +254 711527211
 
-Conclusion
-This bookstore database system is designed to be a flexible and scalable solution for managing the operations of a bookstore. Whether for small local bookstores or larger online bookstores, this schema can easily be adapted to meet the needs of any organization.
-
+## Conclusion
+This bookstore database system is designed to be a flexible and scalable solution for managing the operations of a bookstore. Whether for small local bookstores or larger online bookstores, this schema can easily be adapted to meet the needs of any organization. The visual schema diagram provides clear understanding of the database structure and relationships between entities.
