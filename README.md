@@ -32,9 +32,10 @@ The database consists of the following core tables:
 
 This image illustrates the full ERD for the database schema:
 
-![ERD](A_Entity-Relationship_Diagram_(ERD)_of_a_%22bookstor.png)
+![Entity-Relationship Diagram](![bookstore_erd png](https://github.com/user-attachments/assets/6f270f55-a8a0-4f4d-b9c8-6567a7594d1a)
+)
 
-> **Tip**: Make sure the image file is in the same directory as your README or update the path accordingly.
+
 
 ---
 
