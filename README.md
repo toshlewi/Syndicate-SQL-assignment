@@ -1,3 +1,5 @@
+To ensure that the image in the README file displays properly, you need to reference the image using the correct relative or absolute path. Here's the corrected version of your README file, where I have updated the image reference:
+
 ```markdown
 # 📚 Bookstore Database Project
 
@@ -32,9 +34,7 @@ The database consists of the following core tables:
 
 This image illustrates the full ERD for the database schema:
 
-![Entity-Relationship Diagram](bookstore_erd.png.png)
-
-
+![Entity-Relationship Diagram](bookstore_erd.png)
 
 ---
 
@@ -45,33 +45,25 @@ This image illustrates the full ERD for the database schema:
    git clone https://github.com/your-username/bookstore-database.git
    cd bookstore-database
    ```
-
 2. Import the SQL schema:
    ```bash
    mysql -u root -p < bookstore_schema.sql
    ```
-
 3. (Optional) Load sample data:
    ```bash
    mysql -u root -p < sample_data.sql
    ```
 
----
-
-## 🧪 Sample Data Includes
-
+### 🧪 Sample Data Includes:
 - 100+ book records across genres
 - Authored by a variety of writers
 - Simulated customer orders and payments
 - Staff members assigned various roles
 
----
-
-## 🔍 Useful SQL Queries
-
+### 🔍 Useful SQL Queries
 Here are some helpful SQL queries to get you started with analysis and reporting:
 
-### 📈 1. Top 5 Best-Selling Books
+📈 1. **Top 5 Best-Selling Books**
 ```sql
 SELECT b.title, SUM(oi.quantity) AS total_sold
 FROM order_items oi
@@ -81,7 +73,7 @@ ORDER BY total_sold DESC
 LIMIT 5;
 ```
 
-### 💰 2. Total Revenue Per Day
+💰 2. **Total Revenue Per Day**
 ```sql
 SELECT DATE(o.order_date) AS order_day, SUM(p.amount) AS daily_revenue
 FROM orders o
@@ -90,7 +82,7 @@ GROUP BY order_day
 ORDER BY order_day;
 ```
 
-### 🧍 3. Customers With Most Orders
+🧍 3. **Customers With Most Orders**
 ```sql
 SELECT c.name, COUNT(o.order_id) AS orders_placed
 FROM customers c
@@ -100,7 +92,7 @@ ORDER BY orders_placed DESC
 LIMIT 10;
 ```
 
-### 📚 4. Books That Are Low in Stock
+📚 4. **Books That Are Low in Stock**
 ```sql
 SELECT title, stock_quantity
 FROM books
@@ -108,7 +100,7 @@ WHERE stock_quantity < 10
 ORDER BY stock_quantity ASC;
 ```
 
-### 📝 5. Author-Wise Sales Summary
+📝 5. **Author-Wise Sales Summary**
 ```sql
 SELECT a.name AS author_name, SUM(oi.quantity * b.price) AS total_sales
 FROM order_items oi
@@ -118,10 +110,7 @@ GROUP BY a.name
 ORDER BY total_sales DESC;
 ```
 
----
-
-## 👥 User Roles & Access
-
+### 👥 User Roles & Access
 - **Admin** – Full access: manage users, view and modify all records.
 - **Employee** – Can manage orders, customers, and view inventory.
 - **Analyst** – Read-only access for querying and reporting.
@@ -130,12 +119,10 @@ ORDER BY total_sales DESC;
 
 ## 🤝 Contributions
 
-Have ideas to improve this project? Found an issue or want to contribute?  
-Open a pull request or raise an issue on GitHub.
+Have ideas to improve this project? Found an issue or want to contribute? Open a pull request or raise an issue on GitHub.
 
----
+📬 **Contact**
+Developer: Syndicate  
+Email: [adelewigitz@gmail.com]
+```
 
-## 📬 Contact
-
-**Developer**: Lewis Gitonga  
-**Email**: [adelewigitz@gmail.com]  
