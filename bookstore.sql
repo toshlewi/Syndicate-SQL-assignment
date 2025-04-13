@@ -236,6 +236,83 @@ VALUES
 (7, 'Zainab', 'Ochieng', '+254756888888', 'zainab7@example.com', '2023-06-11 17:40:00'),
 (8, 'Wanjiru', 'Odhiambo', '+254755999999', 'wanjiru8@example.com', '2024-07-05 11:00:00');
 
+-- Insert countries for the bookstore.
+-- Includes a few sample countries.
+INSERT INTO country (country_id, country_name)
+VALUES 
+(1, 'Kenya'),
+(2, 'South Africa'),
+(3, 'United States'),
+(4, 'United Kingdom'),
+(5, 'France');
+
+-- Insert addresses for the bookstore.
+-- Each address is linked to a country.
+INSERT INTO address (address_id, street, city, country_id)
+VALUES 
+(1, '123 Book St', 'Nairobi', 1),
+(2, '456 Publish Ave', 'Cape Town', 2),
+(3, '789 Freedom Rd', 'London', 4),
+(4, '101 Main Blvd', 'New York', 3),
+(5, '202 River Rd', 'Paris', 5);
+
+-- Insert address statuses (e.g., Home, Work, etc.)
+-- These describe the status of customer addresses.
+INSERT INTO address_status (status_id, status_name)
+VALUES 
+(1, 'Home'),
+(2, 'Work'),
+(3, 'Shipping'),
+(4, 'Billing');
+
+-- Insert order statuses (e.g., Pending, Shipped, Completed, etc.)
+-- These describe the status of customer orders.
+INSERT INTO order_status (status_id, status_name)
+VALUES 
+(1, 'Pending'),
+(2, 'Shipped'),
+(3, 'Delivered'),
+(4, 'Cancelled');
+
+-- Insert sample orders for customers.
+-- Each order is linked to a customer and has an order status.
+INSERT INTO cust_order (order_id, customer_id, order_date, shipping_address_id, order_total, status_id)
+VALUES 
+(1, 1, '2024-05-20 10:00:00', 1, 100.50, 1), -- Daniel Wamithi's first order, pending status
+(2, 2, '2024-10-15 12:30:00', 2, 150.00, 2), -- Samuel Njoroge's second order, shipped status
+(3, 3, '2025-02-13 09:45:00', 3, 250.00, 3), -- Joseph Odhiambo's third order, delivered status
+(4, 4, '2023-11-21 11:00:00', 4, 200.00, 4), -- Mary Kariuki's fourth order, cancelled status
+(5, 5, '2024-01-16 14:30:00', 5, 120.75, 1); -- Fatma Mutua's fifth order, pending status
+
+-- Insert shipping methods for the bookstore.
+-- These methods include the name and cost of each shipping method.
+INSERT INTO shipping_method (method_id, method_name, cost)
+VALUES 
+(1, 'Standard Shipping', 5.00),
+(2, 'Express Shipping', 10.00),
+(3, 'Overnight Shipping', 20.00);
+
+-- Insert order history for tracking changes in the order status.
+-- Each entry references an order and its status at a specific time.
+INSERT INTO order_history (order_history_id, order_id, status_id, status_date)
+VALUES 
+(1, 1, 1, '2024-05-20 10:00:00'), -- Order 1 is in 'Pending' status
+(2, 2, 2, '2024-10-15 12:30:00'), -- Order 2 is in 'Shipped' status
+(3, 3, 3, '2025-02-13 09:45:00'), -- Order 3 is in 'Delivered' status
+(4, 4, 4, '2023-11-21 11:00:00'), -- Order 4 is in 'Cancelled' status
+(5, 5, 1, '2024-01-16 14:30:00'); -- Order 5 is in 'Pending' status
+
+-- Insert order lines for each order to specify which books were purchased.
+-- Each order line includes the book ID, quantity, and price at the time of the order.
+INSERT INTO order_line (order_id, book_id, quantity, price)
+VALUES 
+(1, 1, 2, 24.97), -- 2 copies of 'Les Misérables' for Order 1
+(1, 3, 1, 7.83),  -- 1 copy of 'Cry, the Beloved Country' for Order 1
+(2, 7, 3, 13.75), -- 3 copies of 'Disgrace' for Order 2
+(3, 10, 1, 11.70), -- 1 copy of 'The River and The Source' for Order 3
+(4, 5, 1, 15.30),  -- 1 copy of 'Facing Mount Kenya' for Order 4
+(5, 8, 2, 14.60);  -- 2 copies of 'Long Walk to Freedom' for Order 5
+
 
 -- User accounts and roles
 -- Create 'admin' user
