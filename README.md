@@ -1,4 +1,8 @@
-To ensure that the image in the README file displays properly, you need to reference the image using the correct relative or absolute path. Here's the corrected version of your README file, where I have updated the image reference:
+## 🖼️ Entity-Relationship Diagram (ERD)
+
+This image illustrates the full ERD for the database schema:
+
+![Entity-Relationship Diagram](bookstore_erd.png)
 
 ```markdown
 # 📚 Bookstore Database Project
@@ -30,11 +34,7 @@ The database consists of the following core tables:
 
 ---
 
-## 🖼️ Entity-Relationship Diagram (ERD)
 
-This image illustrates the full ERD for the database schema:
-
-![Entity-Relationship Diagram](bookstore_erd.png)
 
 ---
 
