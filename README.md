@@ -1,250 +1,143 @@
-Here's your complete README with the visual database diagram integrated:
+---
 
-# Bookstore Database System
+```markdown
+# 📚 Bookstore Database Project
 
-## Overview
-This SQL database system provides a complete solution for managing bookstore operations, including inventory, customers, orders, and shipping. The database is designed to support both physical and online bookstore needs with comprehensive tables and relationships.
+Welcome to the **Bookstore Database Project**, a MySQL-powered relational database system designed to manage and analyze the key operations of a bookstore — from book inventory and customer transactions to employee roles and payment records.
 
-## Database Structure
+---
 
-### Visual Schema Diagram
-```mermaid
-erDiagram
-    book_language ||--o{ book : "1:N"
-    book_language {
-        INT language_id PK
-        VARCHAR(50) language_name
-    }
-    
-    publisher ||--o{ book : "1:N"
-    publisher {
-        INT publisher_id PK
-        VARCHAR(25) first_name
-        VARCHAR(25) last_name
-        VARCHAR(50) email
-        VARCHAR(30) phone
-    }
-    
-    book ||--o{ book_author : "1:N"
-    book {
-        INT book_id PK
-        VARCHAR(255) title
-        DATE publication_date
-        DECIMAL(10,2) price
-        INT publisher_id FK
-        INT language_id FK
-    }
-    
-    author ||--o{ book_author : "1:N"
-    author {
-        INT author_id PK
-        VARCHAR(100) author_name
-    }
-    
-    book_author }|--|| book : "M:1"
-    book_author }|--|| author : "M:1"
-    book_author {
-        INT book_id PK,FK
-        INT author_id PK,FK
-    }
-    
-    customer ||--o{ cust_order : "1:N"
-    customer {
-        INT customer_id PK
-        VARCHAR(50) first_name
-        VARCHAR(50) last_name
-        VARCHAR(20) phone_number
-        VARCHAR(50) email
-        DATETIME registration_date
-    }
-    
-    customer ||--o{ customer_address : "1:N"
-    address ||--o{ customer_address : "1:N"
-    address_status ||--o{ customer_address : "1:1"
-    
-    customer_address }|--|| customer : "M:1"
-    customer_address }|--|| address : "M:1"
-    customer_address }|--|| address_status : "M:1"
-    customer_address {
-        INT customer_id PK,FK
-        INT address_id PK,FK
-        INT status_id FK
-    }
-    
-    address ||--o{ country : "N:1"
-    address {
-        INT address_id PK
-        VARCHAR(100) street
-        VARCHAR(50) city
-        INT country_id FK
-    }
-    
-    country {
-        INT country_id PK
-        VARCHAR(50) country_name
-    }
-    
-    address_status {
-        INT status_id PK
-        VARCHAR(25) status_name
-    }
-    
-    cust_order ||--o{ order_line : "1:N"
-    cust_order ||--o{ order_history : "1:N"
-    cust_order {
-        INT order_id PK
-        INT customer_id FK
-        DATETIME order_date
-        INT shipping_address_id
-        DECIMAL(10,2) order_total
-        INT status_id FK
-    }
-    
-    order_status ||--o{ cust_order : "1:N"
-    order_status ||--o{ order_history : "1:N"
-    order_status {
-        INT status_id PK
-        VARCHAR(50) status_name
-    }
-    
-    order_history {
-        INT order_history_id PK
-        INT order_id FK
-        INT status_id FK
-        DATETIME status_date
-    }
-    
-    order_line }|--|| cust_order : "M:1"
-    order_line }|--|| book : "M:1"
-    order_line {
-        INT order_id PK,FK
-        INT book_id PK,FK
-        INT quantity
-        DECIMAL(10,2) price
-    }
-    
-    shipping_method {
-        INT method_id PK
-        VARCHAR(50) method_name
-        DECIMAL(10,2) cost
-    }
-```
+## 🗂️ Project Structure
 
-### Core Tables
+The database consists of the following core tables:
 
-#### Book Management
-- **book_language**: Stores available languages (English, Swahili)
-- **publisher**: Contains publisher details (name, contact info)
-- **book**: Main inventory with titles, prices, publication dates
-- **author**: Author information
-- **book_author**: Junction table for book-author relationships
+- **Books** – Title, author, genre, price, and stock.
+- **Authors** – Author name, biography, and nationality.
+- **Customers** – Customer contact and purchase history.
+- **Orders** – Customer orders with timestamps and status.
+- **Order_Items** – Books linked to each order (many-to-many).
+- **Employees** – Staff roles, names, and access control.
+- **Payments** – Tracks how and when payments are made.
 
-#### Customer Management
-- **customer**: Customer profiles with contact details
-- **address**: Physical address storage
-- **country**: Supported countries
-- **address_status**: Address types (Home, Work, etc.)
-- **customer_address**: Customer-address relationships
+---
 
-#### Order Processing
-- **order_status**: Order lifecycle states
-- **cust_order**: Order headers
-- **shipping_method**: Delivery options
-- **order_history**: Order status changes
-- **order_line**: Order details with book quantities
+## 🧠 Objectives
 
-## Sample Data Included
+- Create a normalized, scalable schema for a bookstore.
+- Generate sample data for real-world simulations.
+- Write SQL queries for business intelligence and analytics.
+- Model real-life bookstore workflows with accuracy.
 
-### Books (50+ titles)
-- Classic literature ("Les Misérables", "1984")
-- African literature ("Long Walk to Freedom", "Blossoms of the Savannah")
-- Swahili titles ("Chozi la Heri", "Siku Njema")
+---
 
-### Authors (30+)
-- International authors (Victor Hugo, George Orwell)
-- African authors (Ngũgĩ wa Thiong'o, Chinua Achebe)
-- Kenyan authors (Margaret Ogola, Henry Ole Kulet)
+## 🖼️ Entity-Relationship Diagram (ERD)
 
-### Customers
-- 8 sample customer profiles with complete contact information
-- Multiple address types per customer
+This image illustrates the full ERD for the database schema:
 
-### Orders
-- Sample orders in various statuses (Pending, Shipped, Delivered)
-- Detailed order line items with quantities and prices
+![ERD](A_Entity-Relationship_Diagram_(ERD)_of_a_%22bookstor.png)
 
-## User Roles and Permissions
+> **Tip**: Make sure the image file is in the same directory as your README or update the path accordingly.
 
-| Role | Permissions | Description |
-|------|-------------|-------------|
-| admin | ALL PRIVILEGES | Full database access |
-| sales | SELECT + limited INSERT/UPDATE | Customer and order management |
-| inventory | SELECT + INSERT/UPDATE/DELETE on book-related tables | Inventory management |
-| user_view | SELECT only | Read-only reporting access |
+---
 
-## Example Queries
+## 🏗️ Installation
 
-### 1. Get all books by a specific author
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/your-username/bookstore-database.git
+   cd bookstore-database
+   ```
+
+2. Import the SQL schema:
+   ```bash
+   mysql -u root -p < bookstore_schema.sql
+   ```
+
+3. (Optional) Load sample data:
+   ```bash
+   mysql -u root -p < sample_data.sql
+   ```
+
+---
+
+## 🧪 Sample Data Includes
+
+- 100+ book records across genres
+- Authored by a variety of writers
+- Simulated customer orders and payments
+- Staff members assigned various roles
+
+---
+
+## 🔍 Useful SQL Queries
+
+Here are some helpful SQL queries to get you started with analysis and reporting:
+
+### 📈 1. Top 5 Best-Selling Books
 ```sql
-SELECT b.title, b.price 
-FROM book b
-JOIN book_author ba ON b.book_id = ba.book_id 
-JOIN author a ON ba.author_id = a.author_id
-WHERE a.author_name = 'Ngũgĩ wa Thiong'o';
+SELECT b.title, SUM(oi.quantity) AS total_sold
+FROM order_items oi
+JOIN books b ON oi.book_id = b.book_id
+GROUP BY b.title
+ORDER BY total_sold DESC
+LIMIT 5;
 ```
 
-### 2. View customer order history
+### 💰 2. Total Revenue Per Day
 ```sql
-SELECT c.first_name, c.last_name, o.order_date, 
-       SUM(ol.quantity * ol.price) AS order_total
-FROM cust_order o
-JOIN customer c ON o.customer_id = c.customer_id
-JOIN order_line ol ON o.order_id = ol.order_id
-GROUP BY o.order_id;
+SELECT DATE(o.order_date) AS order_day, SUM(p.amount) AS daily_revenue
+FROM orders o
+JOIN payments p ON o.order_id = p.order_id
+GROUP BY order_day
+ORDER BY order_day;
 ```
 
-### 3. Find pending orders
+### 🧍 3. Customers With Most Orders
 ```sql
-SELECT o.order_id, c.first_name, c.last_name, o.order_date
-FROM cust_order o
-JOIN customer c ON o.customer_id = c.customer_id
-WHERE o.status_id = 1; -- Pending status
+SELECT c.name, COUNT(o.order_id) AS orders_placed
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+GROUP BY c.name
+ORDER BY orders_placed DESC
+LIMIT 10;
 ```
 
-## Setup Instructions
-
-1. Create the database:
+### 📚 4. Books That Are Low in Stock
 ```sql
-CREATE DATABASE bookstore;
-USE bookstore;
+SELECT title, stock_quantity
+FROM books
+WHERE stock_quantity < 10
+ORDER BY stock_quantity ASC;
 ```
 
-2. Execute the provided SQL script to:
-   - Create all tables
-   - Establish relationships
-   - Insert sample data
-   - Configure user roles
+### 📝 5. Author-Wise Sales Summary
+```sql
+SELECT a.name AS author_name, SUM(oi.quantity * b.price) AS total_sales
+FROM order_items oi
+JOIN books b ON oi.book_id = b.book_id
+JOIN authors a ON b.author_id = a.author_id
+GROUP BY a.name
+ORDER BY total_sales DESC;
+```
 
-3. Verify setup by running test queries
+---
 
-## Maintenance Notes
+## 👥 User Roles & Access
 
-1. **Backup Recommendations**
-   - Daily backups of critical tables (book, customer, cust_order)
-   - Weekly full database backups
+- **Admin** – Full access: manage users, view and modify all records.
+- **Employee** – Can manage orders, customers, and view inventory.
+- **Analyst** – Read-only access for querying and reporting.
 
-2. **Performance Tips**
-   - Add indexes on frequently queried columns
-   - Consider partitioning the order_history table
+---
 
-3. **Security**
-   - Regularly review user permissions
-   - Implement password rotation policies
+## 🤝 Contributions
 
-## Support
-For assistance with this database system:
-- Email: adelewigitz@gmail.com
-- Phone: +254 711527211
+Have ideas to improve this project? Found an issue or want to contribute?  
+Open a pull request or raise an issue on GitHub.
 
-## Conclusion
-This bookstore database system is designed to be a flexible and scalable solution for managing the operations of a bookstore. Whether for small local bookstores or larger online bookstores, this schema can easily be adapted to meet the needs of any organization. The visual schema diagram provides clear understanding of the database structure and relationships between entities.
+---
+
+## 📬 Contact
+
+**Developer**: Lewis Gitonga  
+**Email**: [adelewigitz@gmail.com]  
