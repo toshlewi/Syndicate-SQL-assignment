@@ -67,33 +67,14 @@ JOIN book_language bl ON b.language_id = bl.language_id
 WHERE bl.language_name = 'English'; -- Replace 'English' with the language you want to query
 ```
 
-### 5. Get Total Sales for a Specific Publisher
-```sql
-SELECT p.first_name, p.last_name, SUM(ol.quantity * ol.price) AS total_sales
-FROM publisher p
-JOIN book b ON p.publisher_id = b.publisher_id
-JOIN order_line ol ON b.book_id = ol.book_id
-GROUP BY p.publisher_id;
-```
 
-### 6. Get Customer Details with Their Addresses
-```sql
-SELECT c.first_name, c.last_name, a.street, a.city, co.country_name, as.status_name
-FROM customer c
-JOIN customer_address ca ON c.customer_id = ca.customer_id
-JOIN address a ON ca.address_id = a.address_id
-JOIN country co ON a.country_id = co.country_id
-JOIN address_status as ON ca.status_id = as.status_id
-WHERE c.customer_id = 1; -- Replace 1 with the customer_id you want to query
-```
-
-### 7. Get All Shipping Methods and Their Costs
+### 5. Get All Shipping Methods and Their Costs
 ```sql
 SELECT method_name, cost
 FROM shipping_method;
 ```
 
-### 8. Get Order History for a Specific Order
+### 6. Get Order History for a Specific Order
 ```sql
 SELECT oh.status_date, os.status_name
 FROM order_history oh
