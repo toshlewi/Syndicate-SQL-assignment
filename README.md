@@ -1,5 +1,3 @@
----
-
 ```markdown
 # 📚 Bookstore Database Project
 
